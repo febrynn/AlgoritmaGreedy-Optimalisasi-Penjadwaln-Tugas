@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penjadwalan Algoritma Greedy</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            margin-bottom: 5px;
+        }
+
+        form input {
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        form button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Schedule Management</h1>
+
+    <form method="post">
+        <label for="start_time">Start Time:</label>
+        <input type="datetime-local" name="start_time" required>
+
+        <label for="end_time">End Time:</label>
+        <input type="datetime-local" name="end_time" required>
+
+        <label for="lecturer">Lecturer:</label>
+        <input type="text" name="lecturer" required>
+
+        <label for="course">Course:</label>
+        <input type="text" name="course" required>
+
+        <label for="room">Room:</label>
+        <input type="text" name="room" required>
+
+        <button type="submit">Add Event</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Lecturer</th>
+            <th>Course</th>
+            <th>Room</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for event in schedule %}
+        <tr>
+            <td>{{ event.start_time.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ event.end_time.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ event.lecturer }}</td>
+            <td>{{ event.course }}</td>
+            <td>{{ event.room }}</td>
+            <td><a href="{{ url_for('edit', index=loop.index0) }}">Edit</a></td>
+            <td><a href="{{ url_for('delete', index=loop.index0) }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Jadwal yang Pantas</h1>
+    <table>
+        <tr>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Lecturer</th>
+            <th>Course</th>
+            <th>Room</th>
+        </tr>
+        {% for event in deserving_schedule %}
+        <tr>
+            <td>{{ event.start_time.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ event.end_time.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ event.lecturer }}</td>
+            <td>{{ event.course }}</td>
+            <td>{{ event.room }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
